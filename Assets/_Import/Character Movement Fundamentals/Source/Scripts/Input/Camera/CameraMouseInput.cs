@@ -18,6 +18,7 @@ namespace CMF
 
         //Use this sensitivity setting to fine-tune mouse movement;
         //Mouse input will be multiplied by this value;
+        //mouseSensitivity = 0f to disable CameraMouseInput
         public float mouseSensitivity = 1.0f;
 
 	    public override float GetHorizontalCameraInput()

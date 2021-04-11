@@ -20,8 +20,17 @@ namespace CMF
 		bool jumpKeyWasLetGo = false;
 		bool jumpKeyIsPressed = false;
 
+		// Action ["idle", "run", "walk", "jump"]
+		public enum Action{ idle, run, walk, jump };
+		public Action action = Action.idle;
+		private float horizontalMovementInput = 0f;
+		private float verticalMovementInput = 0f;
+		private bool httpError = true;
+
 		//Movement speed;
-		public float movementSpeed = 7f;
+		private float movementSpeed = 20f;
+		public float runningSpeed = 20f;
+		public float walkingSpeed = 4f;
 
 		//'Aircontrol' determines to what degree the player is able to move while in the air;
 		[Range(0f, 1f)]
@@ -94,9 +103,46 @@ namespace CMF
 
 		}
 
+		public void Update_STT_Server(bool httpError){
+			this.httpError = httpError;
+		}
+
 		void Update()
 		{
 			HandleJumpKeyInput();
+			if (httpError == false) {
+				if (action == Action.idle || action == Action.jump) {
+					horizontalMovementInput = verticalMovementInput = 0f;
+				} else if (action == Action.walk || action == Action.run) {
+					verticalMovementInput = 1f;
+					movementSpeed = (action == Action.walk ? walkingSpeed : runningSpeed);
+				}
+			} else {
+				horizontalMovementInput = characterInput.GetHorizontalMovementInput();
+				verticalMovementInput = characterInput.GetVerticalMovementInput();
+			}
+		}
+
+		public void changeAction(string _action)
+		{
+			switch (_action)
+			{
+				case "idle":
+					action = Action.idle;
+					break;
+				case "run":
+					action = Action.run;
+					break;
+				case "walk":
+					action = Action.walk;
+					break;
+				case "jump":
+					action = Action.jump;
+					break;
+				default:
+					action = Action.idle;
+					break;
+			}
 		}
 
 		//Handle jump booleans for later use in FixedUpdate;
@@ -172,15 +218,15 @@ namespace CMF
 			//If no camera transform has been assigned, use the character's transform axes to calculate the movement direction;
 			if(cameraTransform == null)
 			{
-				_velocity += tr.right * characterInput.GetHorizontalMovementInput();
-				_velocity += tr.forward * characterInput.GetVerticalMovementInput();
+				_velocity += tr.right * horizontalMovementInput;
+				_velocity += tr.forward * verticalMovementInput;
 			}
 			else
 			{
 				//If a camera transform has been assigned, use the assigned transform's axes for movement direction;
 				//Project movement direction so movement stays parallel to the ground;
-				_velocity += Vector3.ProjectOnPlane(cameraTransform.right, tr.up).normalized * characterInput.GetHorizontalMovementInput();
-				_velocity += Vector3.ProjectOnPlane(cameraTransform.forward, tr.up).normalized * characterInput.GetVerticalMovementInput();
+				_velocity += Vector3.ProjectOnPlane(cameraTransform.right, tr.up).normalized * horizontalMovementInput;
+				_velocity += Vector3.ProjectOnPlane(cameraTransform.forward, tr.up).normalized * verticalMovementInput;
 			}
 
 			//If necessary, clamp movement vector to magnitude of 1f;
@@ -215,6 +261,8 @@ namespace CMF
 			//If no character input script is attached to this object, return;
 			if(characterInput == null)
 				return false;
+			if (httpError == false)
+				return (action == Action.jump ? true : false);
 
 			return characterInput.IsJumpKeyPressed();
 		}

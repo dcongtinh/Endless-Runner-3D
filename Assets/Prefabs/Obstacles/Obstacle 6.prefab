@@ -599,6 +599,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: car-truck-tanker
       objectReference: {fileID: 0}
+    - target: {fileID: 2385726632712463070, guid: cda6ef31d9478be47ba5c889fa71dcc0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2385726632712503038, guid: cda6ef31d9478be47ba5c889fa71dcc0,
         type: 3}
       propertyPath: m_RootOrder
