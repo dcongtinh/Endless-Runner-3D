@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private float movementSpeed = 8f;
+    private float movementSpeed = 10f;
     private Rigidbody enemyRb;
     private Transform player;
-    private float reactDistance = 50f;
+    private float reactDistance = 64f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +19,16 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float speed = 16.0f;
+        Vector3 targetDirection = player.position - transform.position;
+
+        // The step size is equal to speed times frame time.
+        float singleStep = speed * Time.deltaTime;
+
+        // Rotate the forward vector towards the target direction by one step
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+        transform.rotation = Quaternion.LookRotation(newDirection);
+
         float distance = Vector3.Distance(player.position, transform.position);
         Vector3 lookDirection;
         Vector3 targetPos = new Vector3(player.position.x, player.position.y, player.position.z);
@@ -47,6 +57,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            // Enable particle on the monster itself
             transform.GetChild(0).transform.gameObject.SetActive(true);
         }
     }

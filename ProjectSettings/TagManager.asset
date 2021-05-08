@@ -8,6 +8,7 @@ TagManager:
   - hurdle
   - coin
   - enemy
+  - MiddleLane
   layers:
   - Default
   - TransparentFX

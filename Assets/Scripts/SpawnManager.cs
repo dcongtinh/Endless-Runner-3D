@@ -8,6 +8,9 @@ public class SpawnManager : MonoBehaviour
     PlotSpawner plotSpawner;
     ObstacleSpawner obstacleSpawner;
     EnemySpawner enemySpawner;
+    public int enemyTime = 2;
+    private int cntTriggered = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,10 +28,14 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnTriggerEntered()
     {
+        ++cntTriggered;
         roadSpawner.MoveRoad();
         plotSpawner.SpawnPlot();
         plotSpawner.SpawnPlot();
         obstacleSpawner.SpawnObstacle();
-        enemySpawner.SpawnEnemy();
+
+        if (cntTriggered % enemyTime == 0)
+            enemySpawner.SpawnEnemy();
+
     }
 }

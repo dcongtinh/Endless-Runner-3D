@@ -1,14 +1,24 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject[] hurdles;
+    [System.Serializable]
+    public class Enemy
+    {
+        public GameObject prefab;
+        public bool active;
+    }
+
+    public Enemy[] enemies;
+    public KeyValuePair<GameObject, bool> test;
     // public float minHurdleTime = 2;
     // public float maxHurdleTime = 5;
     // private float hurdleTime = 5;
     private Transform player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,16 +35,22 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        int randHurdle = Random.Range(0, hurdles.Length);
+        List<Enemy> activeEnemies = new List<Enemy>();
+        foreach (Enemy e in enemies){
+            if (e.active == true){
+                activeEnemies.Add(e);
+            }
+        }
+        int randHurdle = Random.Range(0, activeEnemies.Count);
 
         float[] xpos = new float[3];
         xpos[0] = 0f;
-        xpos[1] = -5.75f;
-        xpos[2] = 5.75f;
+        xpos[1] = -2.5f;
+        xpos[2] = 2.5f;
         int randXPos = Random.Range(0, xpos.Length);
-
-        Vector3 hpos = new Vector3(xpos[randXPos], 3, player.position.z + 36);
-        Instantiate(hurdles[randHurdle], hpos, hurdles[randHurdle].transform.rotation);
+        float height = activeEnemies[randHurdle].prefab.name.Contains("Dragon") ? 3f : 0f;
+        Vector3 hpos = new Vector3(xpos[randXPos], height, player.position.z + 72f);
+        Instantiate(activeEnemies[randHurdle].prefab, hpos, activeEnemies[randHurdle].prefab.transform.rotation);
         // StartCoroutine(spawnHurdle());
     }
 }
