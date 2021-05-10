@@ -21,8 +21,8 @@ namespace CMF
         bool jumpKeyWasLetGo = false;
         bool jumpKeyIsPressed = false;
 
-        // Action ["idle", "run", "walk", "jump"]
-        public enum Action { idle, run, walk, jump, rRight, rLeft }; // rRight: run right
+        // Action ["idle", "run", "walk", "slide", "jump", "rRight", "rLeft"]
+        public enum Action { idle, run, walk, slide, jump, rRight, rLeft }; // rRight: run right
         public Action action = Action.idle;
         private float horizontalMovementInput = 0f;
         private float verticalMovementInput = 0f;
@@ -125,7 +125,7 @@ namespace CMF
                     movementSpeed = runningSpeed;
                     horizontalMovementInput = action == Action.rRight ? 0.5f : -0.5f;
                 }
-                else if (action == Action.walk || action == Action.run)
+                else if (action == Action.walk || action == Action.run || action == Action.slide)
                 {
                     verticalMovementInput = 1f;
                     movementSpeed = (action == Action.walk ? walkingSpeed : runningSpeed);
@@ -141,7 +141,7 @@ namespace CMF
                     movementSpeed = runningSpeed;
                     horizontalMovementInput = action == Action.rRight ? 0.5f : -0.5f;
                 }
-                else if (action == Action.walk || action == Action.run)
+                else if (action == Action.walk || action == Action.run || action == Action.slide)
                 {
                     verticalMovementInput = 1f;
                     horizontalMovementInput = 0f;
@@ -167,6 +167,9 @@ namespace CMF
                     break;
                 case "walk":
                     action = Action.walk;
+                    break;
+                case "slide":
+                    action = Action.slide;
                     break;
                 case "jump":
                     action = Action.jump;

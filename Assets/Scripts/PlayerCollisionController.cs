@@ -75,7 +75,8 @@ public class PlayerCollisionController : MonoBehaviour
     bool keyLRPressed = false;
 
     // Update is called once per frame
-    private void SwitchLane(){
+    private void SwitchLane()
+    {
         if (action == "rRight" || Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (currentLane != "r")
@@ -142,6 +143,7 @@ public class PlayerCollisionController : MonoBehaviour
     void Update()
     {
         awc.Update_STT_Server(httpError);
+
         if (httpError == false)
         { // server is working !!!
             displayImage.enabled = true;
@@ -160,6 +162,12 @@ public class PlayerCollisionController : MonoBehaviour
                     {
                         awc.changeAction("run");
                         anim.SetTrigger("run");
+                        scores += 2;
+                    }
+                    else if (action == "sliding")
+                    {
+                        awc.changeAction("slide");
+                        anim.SetTrigger("slide");
                         scores += 2;
                     }
                     else if (action == "idle" || action == "")
@@ -184,6 +192,11 @@ public class PlayerCollisionController : MonoBehaviour
                 {
                     awc.changeAction("jump");
                     anim.SetTrigger("jump");
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    awc.changeAction("slide");
+                    anim.SetTrigger("slide");
                 }
                 else
                 {

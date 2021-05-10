@@ -6721,7 +6721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28a3ef8e12dff41b7a9bd4181187f8dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countDownTime: 3
+  countDownTime: 1
   countDownDisplay: {fileID: 1217480918}
 --- !u!136 &943763781
 CapsuleCollider:
