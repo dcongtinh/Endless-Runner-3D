@@ -81,8 +81,7 @@ public class PlayerCollisionController : MonoBehaviour
         {
             if (currentLane != "r")
             {
-                awc.changeAction("rRight");
-                anim.SetTrigger("run");
+                awc.ChangeAction("rRight");
                 nextLane = "r";
                 keyLRPressed = true;
             }
@@ -92,8 +91,7 @@ public class PlayerCollisionController : MonoBehaviour
         {
             if (currentLane != "l")
             {
-                awc.changeAction("rLeft");
-                anim.SetTrigger("run");
+                awc.ChangeAction("rLeft");
                 nextLane = "l";
                 keyLRPressed = true;
             }
@@ -105,15 +103,13 @@ public class PlayerCollisionController : MonoBehaviour
             {
                 if (currentLane == "l" && middleLaneTriggered)
                 {
-                    awc.changeAction("idle");
-                    anim.SetTrigger("idle");
+                    awc.ChangeAction("idle");
                     currentLane = "m";
                     keyLRPressed = false;
                 }
                 else if (currentLane == "m" && transform.position.x >= 3)
                 {
-                    awc.changeAction("idle");
-                    anim.SetTrigger("idle");
+                    awc.ChangeAction("idle");
                     currentLane = "r";
                     keyLRPressed = false;
                     middleLaneTriggered = false;
@@ -123,15 +119,13 @@ public class PlayerCollisionController : MonoBehaviour
             {
                 if (currentLane == "r" && middleLaneTriggered)
                 {
-                    awc.changeAction("idle");
-                    anim.SetTrigger("idle");
+                    awc.ChangeAction("idle");
                     currentLane = "m";
                     keyLRPressed = false;
                 }
                 else if (currentLane == "m" && transform.position.x <= -3)
                 {
-                    awc.changeAction("idle");
-                    anim.SetTrigger("idle");
+                    awc.ChangeAction("idle");
                     currentLane = "l";
                     keyLRPressed = false;
                     middleLaneTriggered = false;
@@ -154,102 +148,68 @@ public class PlayerCollisionController : MonoBehaviour
                 {
                     if (action == "walking")
                     {
-                        awc.changeAction("walk");
-                        anim.SetTrigger("walk");
+                        awc.ChangeAction("walk");
                         scores += 1;
                     }
                     else if (action == "running")
                     {
-                        awc.changeAction("run");
-                        anim.SetTrigger("run");
+                        awc.ChangeAction("run");
                         scores += 2;
                     }
                     else if (action == "sliding")
                     {
-                        awc.changeAction("slide");
-                        anim.SetTrigger("slide");
+                        awc.ChangeAction("slide");
                         scores += 2;
                     }
-                    else if (action == "idle" || action == "")
-                    {
-                        awc.changeAction("idle");
-                        anim.SetTrigger("idle");
-                    }
+                    else if (action == "idle" || action == "") awc.ChangeAction("idle");
                 }
             }
-            else
-            {
-                awc.changeAction("idle");
-                anim.SetTrigger("idle");
-            }
+            else awc.ChangeAction("idle");
         }
         else
         { // using keyboard controller
             if (!isdead)
             {
                 scores += 1;
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    awc.changeAction("jump");
-                    anim.SetTrigger("jump");
-                }
-                else if (Input.GetKeyDown(KeyCode.DownArrow))
-                {
-                    awc.changeAction("slide");
-                    anim.SetTrigger("slide");
-                }
+                if (Input.GetKeyDown(KeyCode.Space)) awc.ChangeAction("jump");
+                else if (Input.GetKeyDown(KeyCode.DownArrow)) awc.ChangeAction("slide");
                 else
                 {
                     SwitchLane();
                     if (!keyLRPressed)
                     {
-                        awc.changeAction("run");
-                        anim.SetTrigger("run");
+                        awc.ChangeAction("run");
                     }
                 }
             }
-            else
-            {
-                awc.changeAction("idle");
-                anim.SetTrigger("idle");
-            }
+            else awc.ChangeAction("idle");
         }
     }
 
-    IEnumerator GetPose()
-    {
-
-        while (true)
-        {
-            using (UnityWebRequest webRequest = UnityWebRequest.Get(actionUri))
-            {
+    IEnumerator GetPose() {
+        while (true) {
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(actionUri)) {
                 // Request and wait for the desired page.
                 yield return webRequest.SendWebRequest();
-
-                if (webRequest.isHttpError)
-                {
-                    // Debug.Log("HTTP ERROR: " + webRequest.error);
+                if (webRequest.isHttpError) {
+                    Debug.Log("HTTP ERROR: " + webRequest.error);
                     this.httpError = true;
                     continue;
                 }
-
-                try
-                {
+                try {
                     // parse to get action from http response
                     var text = webRequest.downloadHandler.text;
                     var response = JsonUtility.FromJson<PoseResponse>(text);
                     this.action = response.action;
                     this.httpError = false;
-                    // Debug.Log("New action updated: " + action);
+                    Debug.Log("New action updated: " + action);
                 }
                 // if error
-                catch (Exception e)
-                {
+                catch (Exception e) {
                     this.httpError = true;
-                    // Debug.LogError("Error happened: " + e.ToString());
+                    Debug.LogError("Error happened: " + e.ToString());
                 }
-
-                // whatever happens, wait for 1 second
+                // whatever happens, wait for 0.25 second
                 yield return new WaitForSeconds(0.25f);
             }
         }
@@ -289,7 +249,7 @@ public class PlayerCollisionController : MonoBehaviour
                     // Debug.LogError("Error happened: " + e.ToString());
                 }
 
-                // whatever happens, wait for 1 second
+                // whatever happens, wait for 0.05 second
                 yield return new WaitForSeconds(0.05f);
             }
         }
@@ -301,6 +261,7 @@ public class PlayerCollisionController : MonoBehaviour
         {
             spawnManager.SpawnTriggerEntered();
         }
+
         if (other.tag == "coin")
         {
             Instantiate(coinCollectParticle, other.transform.position + new Vector3(0, 0.49f, 0), other.transform.rotation);
@@ -309,6 +270,7 @@ public class PlayerCollisionController : MonoBehaviour
             ++coins;
             scores += 10;
         }
+
         if (other.tag == "MiddleLane"){
             middleLaneTriggered = true;
         }

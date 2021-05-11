@@ -1136,19 +1136,19 @@ MonoBehaviour:
   enemies:
   - prefab: {fileID: 4443815736988328368, guid: 81637dc5ccd664489ac8179707e932e5,
       type: 3}
-    active: 1
+    active: 0
   - prefab: {fileID: 2498033060849483218, guid: b5dc73f48123f4f72947830d43d134ef,
       type: 3}
-    active: 1
+    active: 0
   - prefab: {fileID: 1554607291529567620, guid: ee93a7bf1117f42ac9b313d5faf16ee7,
       type: 3}
-    active: 1
+    active: 0
   - prefab: {fileID: 8058393423415726428, guid: c9fd6691b164c43579d1b23fa417ff7d,
       type: 3}
-    active: 1
+    active: 0
   - prefab: {fileID: 8948590564386701716, guid: fa5b95524008e4b949a361badfbde873,
       type: 3}
-    active: 1
+    active: 0
 --- !u!1 &445403072 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1390688178328085145, guid: fce55aafa23eb423e9868bb4cb3600ca,

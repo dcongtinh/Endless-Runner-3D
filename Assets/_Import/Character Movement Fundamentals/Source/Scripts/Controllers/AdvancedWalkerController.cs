@@ -78,7 +78,7 @@ namespace CMF
             Rising,
             Jumping
         }
-        Animator animator;
+        private Animator anim;
         ControllerState currentControllerState = ControllerState.Falling;
 
         [Tooltip("Optional camera transform used for calculating movement direction. If assigned, character movement will take camera view into account.")]
@@ -88,7 +88,7 @@ namespace CMF
         void Awake()
         {
             mover = GetComponent<Mover>();
-            animator = GetComponentInChildren<Animator>();
+            anim = GetComponent<Animator>();
             tr = transform;
             characterInput = GetComponent<CharacterInput>();
             ceilingDetector = GetComponent<CeilingDetector>();
@@ -149,33 +149,41 @@ namespace CMF
             }
         }
 
-        public void changeAction(string _action)
+        public void ChangeAction(string _action)
         {
             switch (_action)
             {
                 case "idle":
                     action = Action.idle;
+                    anim.SetTrigger("idle");
                     break;
                 case "run":
                     action = Action.run;
+                    anim.SetTrigger("run");
                     break;
                 case "rRight":
                     action = Action.rRight;
+                    anim.SetTrigger("run");
                     break;
                 case "rLeft":
                     action = Action.rLeft;
+                    anim.SetTrigger("run");
                     break;
                 case "walk":
                     action = Action.walk;
+                    anim.SetTrigger("walk");
                     break;
                 case "slide":
                     action = Action.slide;
+                    anim.SetTrigger("slide");
                     break;
                 case "jump":
                     action = Action.jump;
+                    anim.SetTrigger("jump");
                     break;
                 default:
                     action = Action.idle;
+                    anim.SetTrigger("idle");
                     break;
             }
         }

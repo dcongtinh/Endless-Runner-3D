@@ -41,16 +41,18 @@ public class EnemySpawner : MonoBehaviour
                 activeEnemies.Add(e);
             }
         }
-        int randHurdle = Random.Range(0, activeEnemies.Count);
 
-        float[] xpos = new float[3];
-        xpos[0] = 0f;
-        xpos[1] = -2.5f;
-        xpos[2] = 2.5f;
-        int randXPos = Random.Range(0, xpos.Length);
-        float height = activeEnemies[randHurdle].prefab.name.Contains("Dragon") ? 3f : 0f;
-        Vector3 hpos = new Vector3(xpos[randXPos], height, player.position.z + 72f);
-        Instantiate(activeEnemies[randHurdle].prefab, hpos, activeEnemies[randHurdle].prefab.transform.rotation);
-        // StartCoroutine(spawnHurdle());
+        if (activeEnemies.Count > 0) {
+            int randHurdle = Random.Range(0, activeEnemies.Count);
+            float[] xpos = new float[3];
+            xpos[0] = 0f;
+            xpos[1] = -2.5f;
+            xpos[2] = 2.5f;
+            int randXPos = Random.Range(0, xpos.Length);
+            float height = activeEnemies[randHurdle].prefab.name.Contains("Dragon") ? 3f : 0f;
+            Vector3 hpos = new Vector3(xpos[randXPos], height, player.position.z + 72f);
+            Instantiate(activeEnemies[randHurdle].prefab, hpos, activeEnemies[randHurdle].prefab.transform.rotation);
+            // StartCoroutine(spawnHurdle());
+        }
     }
 }
