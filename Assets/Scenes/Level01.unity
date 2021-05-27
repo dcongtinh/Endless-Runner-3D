@@ -1136,7 +1136,7 @@ MonoBehaviour:
   enemies:
   - prefab: {fileID: 4443815736988328368, guid: 81637dc5ccd664489ac8179707e932e5,
       type: 3}
-    active: 0
+    active: 1
   - prefab: {fileID: 2498033060849483218, guid: b5dc73f48123f4f72947830d43d134ef,
       type: 3}
     active: 0

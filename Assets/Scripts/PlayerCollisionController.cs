@@ -24,7 +24,6 @@ public class PlayerCollisionController : MonoBehaviour
     public ParticleSystem enemyHitParticle;
     public GameObject gameOverMenu;
 
-    private Animator anim;
     private bool isdead = false;
     private bool middleLaneTriggered = true;
     private float scores = 0;
@@ -36,6 +35,8 @@ public class PlayerCollisionController : MonoBehaviour
     private AdvancedWalkerController awc;
     private AudioControl audioControl;
     private string action = "idle";
+    private string stand_crunch = "stand";
+    private string lane = "middle";
     private bool httpError = true; // status of server is working or not
 
     // get pose task handler
@@ -50,13 +51,14 @@ public class PlayerCollisionController : MonoBehaviour
     {
         public string code;
         public string action;
+        public string stand_crunch;
+        public string lane;
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponent<Animator>();
         awc = GetComponent<AdvancedWalkerController>();
         audioControl = GetComponent<AudioControl>();
         getPoseRequest = GetPose();
@@ -77,21 +79,96 @@ public class PlayerCollisionController : MonoBehaviour
     // Update is called once per frame
     private void SwitchLane()
     {
-        if (action == "rRight" || Input.GetKeyDown(KeyCode.RightArrow))
+        if (lane == "right")
         {
             if (currentLane != "r")
             {
-                awc.ChangeAction("rRight");
+                awc.ChangeAction("right");
+                keyLRPressed = true;
+                if (currentLane == "m" && transform.position.x >= 3)
+                {
+                    awc.ChangeAction("idle");
+                    currentLane = "r";
+                    middleLaneTriggered = false;
+                    keyLRPressed = false;
+                }
+                else if (currentLane == "l" && middleLaneTriggered)
+                {
+                    awc.ChangeAction("idle");
+                    currentLane = "m";
+                    keyLRPressed = false;
+                }
+            }
+        }
+
+        if (lane == "left")
+        {
+            if (currentLane != "l")
+            {
+                awc.ChangeAction("left");
+                keyLRPressed = true;
+                if (currentLane == "m" && transform.position.x <= -3)
+                {
+                    awc.ChangeAction("idle");
+                    currentLane = "l";
+                    middleLaneTriggered = false;
+                    keyLRPressed = false;
+                }
+                else if (currentLane == "r" && middleLaneTriggered)
+                {
+                    awc.ChangeAction("idle");
+                    currentLane = "m";
+                    keyLRPressed = false;
+                }
+            }
+        }
+
+        if (lane == "middle")
+        {
+            if (currentLane != "m")
+            {
+                if (currentLane == "l")
+                {
+                    awc.ChangeAction("right");
+                    keyLRPressed = true;
+                    if (middleLaneTriggered)
+                    {
+                        awc.ChangeAction("idle");
+                        currentLane = "m";
+                        keyLRPressed = false;
+                    }
+                }
+                if (currentLane == "r")
+                {
+                   awc.ChangeAction("left");
+                   keyLRPressed = true;
+                    if (middleLaneTriggered)
+                    {
+                        awc.ChangeAction("idle");
+                        currentLane = "m";
+                        keyLRPressed = false;
+                    }
+                }
+            }
+        }
+    }
+
+    private void SwitchLane_Keyboard(){
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (currentLane != "r")
+            {
+                awc.ChangeAction("right");
                 nextLane = "r";
                 keyLRPressed = true;
             }
         }
 
-        if (action == "rLeft" || Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (currentLane != "l")
             {
-                awc.ChangeAction("rLeft");
+                awc.ChangeAction("left");
                 nextLane = "l";
                 keyLRPressed = true;
             }
@@ -134,6 +211,7 @@ public class PlayerCollisionController : MonoBehaviour
         }
     }
 
+
     void Update()
     {
         awc.Update_STT_Server(httpError);
@@ -146,7 +224,11 @@ public class PlayerCollisionController : MonoBehaviour
                 SwitchLane();
                 if (!keyLRPressed)
                 {
-                    if (action == "walking")
+                    if (stand_crunch == "crunch") {
+                        awc.ChangeAction("slide");
+                        scores += 2;
+                    }
+                    else if (action == "walking")
                     {
                         awc.ChangeAction("walk");
                         scores += 1;
@@ -156,15 +238,11 @@ public class PlayerCollisionController : MonoBehaviour
                         awc.ChangeAction("run");
                         scores += 2;
                     }
-                    else if (action == "sliding")
-                    {
-                        awc.ChangeAction("slide");
-                        scores += 2;
+                    else if (action == "idle" || action == "unknown" || action == "") {
+                        awc.ChangeAction("idle");
                     }
-                    else if (action == "idle" || action == "") awc.ChangeAction("idle");
                 }
             }
-            else awc.ChangeAction("idle");
         }
         else
         { // using keyboard controller
@@ -175,14 +253,13 @@ public class PlayerCollisionController : MonoBehaviour
                 else if (Input.GetKeyDown(KeyCode.DownArrow)) awc.ChangeAction("slide");
                 else
                 {
-                    SwitchLane();
+                    SwitchLane_Keyboard();
                     if (!keyLRPressed)
                     {
                         awc.ChangeAction("run");
                     }
                 }
             }
-            else awc.ChangeAction("idle");
         }
     }
 
@@ -201,6 +278,8 @@ public class PlayerCollisionController : MonoBehaviour
                     var text = webRequest.downloadHandler.text;
                     var response = JsonUtility.FromJson<PoseResponse>(text);
                     this.action = response.action;
+                    this.stand_crunch = response.stand_crunch;
+                    this.lane = response.lane;
                     this.httpError = false;
                     Debug.Log("New action updated: " + action);
                 }
@@ -210,7 +289,7 @@ public class PlayerCollisionController : MonoBehaviour
                     Debug.LogError("Error happened: " + e.ToString());
                 }
                 // whatever happens, wait for 0.25 second
-                yield return new WaitForSeconds(0.25f);
+                yield return new WaitForSeconds(0.5f);
             }
         }
     }
@@ -316,7 +395,7 @@ public class PlayerCollisionController : MonoBehaviour
             SaveScores(entries);
             scoreTextOver.text = scores.ToString();
             highScoreTextOver.text = Mathf.Max(scores, entries.highScores[0]).ToString();
-            anim.SetTrigger("death");
+            awc.ChangeAction("death");
         }
     }
 

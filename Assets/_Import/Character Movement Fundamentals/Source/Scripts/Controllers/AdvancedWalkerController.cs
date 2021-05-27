@@ -21,15 +21,15 @@ namespace CMF
         bool jumpKeyWasLetGo = false;
         bool jumpKeyIsPressed = false;
 
-        // Action ["idle", "run", "walk", "slide", "jump", "rRight", "rLeft"]
-        public enum Action { idle, run, walk, slide, jump, rRight, rLeft }; // rRight: run right
+        // Action ["idle", "run", "walk", "slide", "jump", "right", "left"]
+        public enum Action { idle, run, walk, slide, jump, right, left }; // right: run right
         public Action action = Action.idle;
         private float horizontalMovementInput = 0f;
         private float verticalMovementInput = 0f;
         private bool httpError = true;
 
         //Movement speed;
-        private float movementSpeed = 20f;
+        public float movementSpeed = 8f;
         public float runningSpeed = 20f;
         public float walkingSpeed = 4f;
 
@@ -113,78 +113,31 @@ namespace CMF
         void Update()
         {
             HandleJumpKeyInput();
-            if (httpError == false)
-            {
-                if (action == Action.idle || action == Action.jump)
-                {
-                    horizontalMovementInput = verticalMovementInput = 0f;
-                }
-                else if (action == Action.rRight || action == Action.rLeft)
-                {
-                    verticalMovementInput = 1f;
-                    movementSpeed = runningSpeed;
-                    horizontalMovementInput = action == Action.rRight ? 0.5f : -0.5f;
-                }
-                else if (action == Action.walk || action == Action.run || action == Action.slide)
-                {
-                    verticalMovementInput = 1f;
-                    movementSpeed = (action == Action.walk ? walkingSpeed : runningSpeed);
-                }
-            }
-            else
-            {
-                horizontalMovementInput = characterInput.GetHorizontalMovementInput();
-                verticalMovementInput = characterInput.GetVerticalMovementInput();
-                if (action == Action.rRight || action == Action.rLeft)
-                {
-                    verticalMovementInput = 1f;
-                    movementSpeed = runningSpeed;
-                    horizontalMovementInput = action == Action.rRight ? 0.5f : -0.5f;
-                }
-                else if (action == Action.walk || action == Action.run || action == Action.slide)
-                {
-                    verticalMovementInput = 1f;
-                    horizontalMovementInput = 0f;
-                }
-            }
         }
 
         public void ChangeAction(string _action)
         {
-            switch (_action)
+            if (httpError) {
+                horizontalMovementInput = characterInput.GetHorizontalMovementInput();
+                verticalMovementInput = characterInput.GetVerticalMovementInput();
+            }
+            if (_action == "idle" || _action == "jump" || _action == "death")
             {
-                case "idle":
-                    action = Action.idle;
-                    anim.SetTrigger("idle");
-                    break;
-                case "run":
-                    action = Action.run;
-                    anim.SetTrigger("run");
-                    break;
-                case "rRight":
-                    action = Action.rRight;
-                    anim.SetTrigger("run");
-                    break;
-                case "rLeft":
-                    action = Action.rLeft;
-                    anim.SetTrigger("run");
-                    break;
-                case "walk":
-                    action = Action.walk;
-                    anim.SetTrigger("walk");
-                    break;
-                case "slide":
-                    action = Action.slide;
-                    anim.SetTrigger("slide");
-                    break;
-                case "jump":
-                    action = Action.jump;
-                    anim.SetTrigger("jump");
-                    break;
-                default:
-                    action = Action.idle;
-                    anim.SetTrigger("idle");
-                    break;
+                anim.SetTrigger(_action);
+                horizontalMovementInput = verticalMovementInput = 0f;
+            }
+            else if (_action == "right" || _action == "left")
+            {
+                anim.SetTrigger("run");
+                verticalMovementInput = 1f;
+                movementSpeed = runningSpeed;
+                horizontalMovementInput = _action == "right" ? 0.5f : -0.5f;
+            }
+            else if (_action == "walk" || _action == "run" || _action == "slide")
+            {
+                anim.SetTrigger(_action);
+                verticalMovementInput = (_action == "slide" ? 0f : 1f);
+                movementSpeed = (_action == "run" ? runningSpeed : walkingSpeed);
             }
         }
 

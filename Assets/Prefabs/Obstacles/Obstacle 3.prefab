@@ -534,6 +534,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: barrier-concrete-demaged
       objectReference: {fileID: 0}
+    - target: {fileID: 1544860570744098, guid: 461957b2fcf3a40afa53c22aab2224e5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4549876966168222, guid: 461957b2fcf3a40afa53c22aab2224e5, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -684,6 +688,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: tires
       objectReference: {fileID: 0}
+    - target: {fileID: 1864201460568434, guid: 8f9a34605c4694db2869368bd696e473, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4623031394116114, guid: 8f9a34605c4694db2869368bd696e473, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -759,6 +767,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: traffic-cone
       objectReference: {fileID: 0}
+    - target: {fileID: 1962935807625104, guid: c97e7989e680042709256e665aca761e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4227565440244082, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -821,6 +833,10 @@ PrefabInstance:
     - target: {fileID: 1215484173259310, guid: 756b79cb808cc4a7a933d2adf330571d, type: 3}
       propertyPath: m_Name
       value: barrier-concrete
+      objectReference: {fileID: 0}
+    - target: {fileID: 1215484173259310, guid: 756b79cb808cc4a7a933d2adf330571d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4161743798734272, guid: 756b79cb808cc4a7a933d2adf330571d, type: 3}
       propertyPath: m_RootOrder
@@ -897,6 +913,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: barrel
       objectReference: {fileID: 0}
+    - target: {fileID: 1000010360536784, guid: eec5409dd2f67654080d9519bd1325df, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4000012240531662, guid: eec5409dd2f67654080d9519bd1325df, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -971,6 +991,10 @@ PrefabInstance:
     - target: {fileID: 1000010085865484, guid: 9743b1d163642a740b902d77a56e0642, type: 3}
       propertyPath: m_Name
       value: barrel-empty
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000010085865484, guid: 9743b1d163642a740b902d77a56e0642, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4000013774402736, guid: 9743b1d163642a740b902d77a56e0642, type: 3}
       propertyPath: m_RootOrder
@@ -1121,6 +1145,10 @@ PrefabInstance:
     - target: {fileID: 1962935807625104, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_Name
       value: traffic-cone (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1962935807625104, guid: c97e7989e680042709256e665aca761e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4227565440244082, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_RootOrder

@@ -463,6 +463,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: barrier-concrete-demaged
       objectReference: {fileID: 0}
+    - target: {fileID: 1544860570744098, guid: 461957b2fcf3a40afa53c22aab2224e5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4549876966168222, guid: 461957b2fcf3a40afa53c22aab2224e5, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -538,13 +542,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: traffic-cone (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1962935807625104, guid: c97e7989e680042709256e665aca761e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4227565440244082, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4227565440244082, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.46
+      value: 5.6800003
       objectReference: {fileID: 0}
     - target: {fileID: 4227565440244082, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -755,6 +763,10 @@ PrefabInstance:
     - target: {fileID: 1962935807625104, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_Name
       value: traffic-cone
+      objectReference: {fileID: 0}
+    - target: {fileID: 1962935807625104, guid: c97e7989e680042709256e665aca761e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4227565440244082, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_RootOrder
@@ -974,6 +986,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: barrier-concrete
       objectReference: {fileID: 0}
+    - target: {fileID: 1215484173259310, guid: 756b79cb808cc4a7a933d2adf330571d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4161743798734272, guid: 756b79cb808cc4a7a933d2adf330571d, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1049,13 +1065,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: traffic-cone (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1962935807625104, guid: c97e7989e680042709256e665aca761e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4227565440244082, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4227565440244082, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.35
+      value: 4.11
       objectReference: {fileID: 0}
     - target: {fileID: 4227565440244082, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1191,6 +1211,10 @@ PrefabInstance:
     - target: {fileID: 1962935807625104, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_Name
       value: traffic-cone (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1962935807625104, guid: c97e7989e680042709256e665aca761e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4227565440244082, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_RootOrder
@@ -1330,6 +1354,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: truck-broken
       objectReference: {fileID: 0}
+    - target: {fileID: 1573691596880724, guid: 5d529978fda0b47e78fec6a6a3b375e3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4910095685967008, guid: 5d529978fda0b47e78fec6a6a3b375e3, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1344,11 +1372,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4910095685967008, guid: 5d529978fda0b47e78fec6a6a3b375e3, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.9
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4910095685967008, guid: 5d529978fda0b47e78fec6a6a3b375e3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.33
+      value: 3.84
       objectReference: {fileID: 0}
     - target: {fileID: 4910095685967008, guid: 5d529978fda0b47e78fec6a6a3b375e3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1405,13 +1433,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: traffic-cone (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1962935807625104, guid: c97e7989e680042709256e665aca761e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4227565440244082, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4227565440244082, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.95
+      value: 2.37
       objectReference: {fileID: 0}
     - target: {fileID: 4227565440244082, guid: c97e7989e680042709256e665aca761e, type: 3}
       propertyPath: m_LocalPosition.y

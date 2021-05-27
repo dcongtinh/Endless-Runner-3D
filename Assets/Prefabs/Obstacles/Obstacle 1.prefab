@@ -200,6 +200,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoinRow (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 9072260882859605420, guid: 083c327509ef8419a982d78b0a217643,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 083c327509ef8419a982d78b0a217643, type: 3}
 --- !u!4 &2539570580492674982 stripped
@@ -275,6 +280,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoinRow (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 9072260882859605420, guid: 083c327509ef8419a982d78b0a217643,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 083c327509ef8419a982d78b0a217643, type: 3}
 --- !u!4 &4286254388421027172 stripped
@@ -294,6 +304,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: car-ambulance-pickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 3599669909053901963, guid: 8533eb24444732d43ad95ef38bceaa96,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3599669909054132395, guid: 8533eb24444732d43ad95ef38bceaa96,
         type: 3}
@@ -384,6 +399,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: forklift
       objectReference: {fileID: 0}
+    - target: {fileID: 1423468028759846, guid: bc8dfa78933894feb833d87fdb95ebfb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4527424449015078, guid: bc8dfa78933894feb833d87fdb95ebfb, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -459,6 +478,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: car-firefighter-pickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 4988997103125665080, guid: b9e302b10128f604abc2eca6b4bc46e7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4988997103125891352, guid: b9e302b10128f604abc2eca6b4bc46e7,
         type: 3}
@@ -548,6 +572,10 @@ PrefabInstance:
     - target: {fileID: 1000012810175510, guid: 7b5319c408b7a1b47afe613a550ee023, type: 3}
       propertyPath: m_Name
       value: sledge
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000012810175510, guid: 7b5319c408b7a1b47afe613a550ee023, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4000013046035016, guid: 7b5319c408b7a1b47afe613a550ee023, type: 3}
       propertyPath: m_RootOrder
@@ -680,6 +708,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toadstool
       objectReference: {fileID: 0}
+    - target: {fileID: 3100087218541573135, guid: a2b82ea3adfdd43449dd071e7e1b19ca,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2b82ea3adfdd43449dd071e7e1b19ca, type: 3}
 --- !u!4 &8348116317714953189 stripped
@@ -754,6 +787,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CoinRow
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072260882859605420, guid: 083c327509ef8419a982d78b0a217643,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 083c327509ef8419a982d78b0a217643, type: 3}

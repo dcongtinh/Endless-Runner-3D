@@ -49,7 +49,7 @@ public class EnemySpawner : MonoBehaviour
             xpos[1] = -2.5f;
             xpos[2] = 2.5f;
             int randXPos = Random.Range(0, xpos.Length);
-            float height = activeEnemies[randHurdle].prefab.name.Contains("Dragon") ? 3f : 0f;
+            float height = activeEnemies[randHurdle].prefab.name.Contains("Dragon") ? 2.5f : 0f;
             Vector3 hpos = new Vector3(xpos[randXPos], height, player.position.z + 72f);
             Instantiate(activeEnemies[randHurdle].prefab, hpos, activeEnemies[randHurdle].prefab.transform.rotation);
             // StartCoroutine(spawnHurdle());

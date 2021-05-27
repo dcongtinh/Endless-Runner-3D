@@ -414,6 +414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   action: 0
+  movementSpeed: 20
   runningSpeed: 20
   walkingSpeed: 4
   airControl: 0.4
