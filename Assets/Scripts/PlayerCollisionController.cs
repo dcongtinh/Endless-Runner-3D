@@ -7,12 +7,21 @@ using UnityEngine.UI;
 using TMPro;
 using CMF;
 using UnityEngine.Networking;
+using System.Text;
+using System.Threading.Tasks;
+// using socket.io;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
 
 public class PlayerCollisionController : MonoBehaviour
 {
     // endpoint to get current action, from Python
     public static string actionUri = "http://localhost:5000/pose";
     public static string imageUri = "http://localhost:5000/image";
+
+    public static IPEndPoint socketUri = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080);
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI coinsText;
@@ -56,15 +65,43 @@ public class PlayerCollisionController : MonoBehaviour
     }
 
 
+    private Socket sock;
+    private static ManualResetEvent connectDone =
+        new ManualResetEvent(false);
+
+    static string decode_message(byte[] raw){
+        string result = "";
+        for(int i = 0; i<raw.Length && raw[i] != 1; ++i) {
+            result += (char) raw[i];
+        }
+        return result;
+    }
     // Start is called before the first frame update
     void Start()
     {
         awc = GetComponent<AdvancedWalkerController>();
         audioControl = GetComponent<AudioControl>();
-        getPoseRequest = GetPose();
-        getImageRequest = GetImage();
-        StartCoroutine(getPoseRequest);
-        StartCoroutine(getImageRequest);
+        StartCoroutine("GetImage");
+        // connect
+        sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        sock.Blocking = false;
+        sock.ReceiveTimeout = 1; // 100 ms for receiving
+        // connect async
+        sock.BeginConnect(socketUri, new AsyncCallback(ConnectCallback), sock);
+        connectDone.WaitOne(2000);
+        // now start corroutine
+        StartCoroutine("GetPose");
+        // cannot start corroutine in another thread, which prevent corroutine to work with unity main thread
+
+    }
+
+    private void ConnectCallback(IAsyncResult ar) {
+        // after connecting done call to start corroutine
+        // Retrieve the socket from the state object.
+        sock = (Socket) ar.AsyncState;
+        // Complete the connection phase
+        sock.EndConnect(ar);
+        connectDone.Set();
     }
 
     void FixedUpdate()
@@ -79,6 +116,10 @@ public class PlayerCollisionController : MonoBehaviour
     // Update is called once per frame
     private void SwitchLane()
     {
+        if (lane == "unknown") {
+            keyLRPressed = false;
+        }
+
         if (lane == "right")
         {
             if (currentLane != "r")
@@ -152,7 +193,6 @@ public class PlayerCollisionController : MonoBehaviour
             }
         }
     }
-
     private void SwitchLane_Keyboard(){
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
@@ -211,14 +251,12 @@ public class PlayerCollisionController : MonoBehaviour
         }
     }
 
-
     void Update()
     {
         awc.Update_STT_Server(httpError);
 
         if (httpError == false)
         { // server is working !!!
-            displayImage.enabled = true;
             if (!isdead)
             {
                 SwitchLane();
@@ -265,17 +303,27 @@ public class PlayerCollisionController : MonoBehaviour
 
     IEnumerator GetPose() {
         while (true) {
-            using (UnityWebRequest webRequest = UnityWebRequest.Get(actionUri)) {
-                // Request and wait for the desired page.
-                yield return webRequest.SendWebRequest();
-                if (webRequest.isHttpError) {
-                    Debug.Log("HTTP ERROR: " + webRequest.error);
-                    this.httpError = true;
-                    continue;
+
+            // read data if available
+            if (sock.Available > 0) {
+                Debug.Log("Data available: " + sock.Available);
+                // reset buffer
+                var buffer = new byte[128];
+
+                // receive data from socket
+                var readCount = sock.Receive(buffer);
+
+                if (readCount == 0) {
+                    // stop the corroutine
+                    yield return new WaitForSeconds(0.01f);
                 }
+
+                // decode it
+                var message = decode_message(buffer);
+
                 try {
                     // parse to get action from http response
-                    var text = webRequest.downloadHandler.text;
+                    var text = message;
                     var response = JsonUtility.FromJson<PoseResponse>(text);
                     this.action = response.action;
                     this.stand_crunch = response.stand_crunch;
@@ -286,12 +334,16 @@ public class PlayerCollisionController : MonoBehaviour
                 // if error
                 catch (Exception e) {
                     this.httpError = true;
-                    Debug.LogError("Error happened: " + e.ToString());
+                    Debug.LogError("Error happened: " + e.ToString() + ". Message received:" + message);
                 }
-                // whatever happens, wait for 0.25 second
-                yield return new WaitForSeconds(0.5f);
+                // return to caller
+                // Debug.Log(message);
+                // yield return new WaitForSeconds(0.5f);
             }
+
+            yield return new WaitForSeconds(0.01f);
         }
+        yield return new WaitForSeconds(0.01f);
     }
 
     IEnumerator GetImage()
@@ -305,12 +357,16 @@ public class PlayerCollisionController : MonoBehaviour
 
                 if (webRequest.isHttpError)
                 {
+                    httpError = true;
                     // Debug.Log("HTTP ERROR: " + webRequest.error);
                     continue;
                 }
 
+                httpError = false;
+
                 try
                 {
+                    displayImage.enabled = true;
                     // parse to get action from http response
                     var base64Url = webRequest.downloadHandler.text;
                     byte[] imageBytes = Convert.FromBase64String(base64Url);
@@ -325,11 +381,11 @@ public class PlayerCollisionController : MonoBehaviour
                 // if error
                 catch (Exception e)
                 {
-                    // Debug.LogError("Error happened: " + e.ToString());
+                    Debug.LogError("Error happened: " + e.ToString());
                 }
 
                 // whatever happens, wait for 0.05 second
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(0.01f);
             }
         }
     }
@@ -403,5 +459,13 @@ public class PlayerCollisionController : MonoBehaviour
     {
         // Application.LoadLevel(Application.loadedLevelName);
         gameOverMenu.SetActive(true);
+    }
+
+    void OnApplicationQuit()
+    {
+        if (sock != null) {
+            sock.Close();
+            sock = null;
+        }
     }
 }
